@@ -1,4 +1,4 @@
-module github.com/miyanaga/vultr-cli
+module github.com/ideamans/vultr-cli
 
 go 1.26.5
 
