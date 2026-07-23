@@ -36,13 +36,30 @@ vultr instance --help       # instance の全オペレーションとシグネ�
 vultr instance get --help   # 個別オペレーションの引数
 ```
 
-### AI（LLM）向けヘルプ
+### AIエージェントから使う
 
-`--llm` は LLM が読むことを想定した自己完結のリファレンス（利用規約・全オペレーションのカタログ・全リクエストボディの JSON スキーマ）を一括出力します。コマンドツリーと同じリフレクションデータから生成するため、実装と乖離しません。
+`vultr llm` は AI エージェントが読むことを想定した自己完結のリファレンス（利用規約・全オペレーションのカタログ・全リクエストボディの JSON スキーマ）を一括出力します。カタログとスキーマはコマンドツリーと同じリフレクションデータから生成するため実装と乖離せず、バイナリに埋め込まれているのでオフラインでも実行中のバージョンと必ず一致します。
 
 ```bash
-vultr --llm
+vultr llm                  # Markdown
+vultr llm --format json    # 章ごとの JSON 配列
+vultr --llm                # 非推奨エイリアス。従来どおりどの位置でも動作します
 ```
+
+Claude Code ではプラグインを導入すると `/vultr-cli-usage` と `/vultr-cli-install` が使えます。
+
+```
+/plugin marketplace add ideamans/claude-public-plugins
+/plugin install vultr-cli@ideamans-plugins
+```
+
+同じスキルは Copilot や Cursor など Agent Skills 対応ホストでも利用できます。
+
+```bash
+gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-cli-usage --agent copilot
+```
+
+スキル本体は [`plugins/vultr-cli/`](plugins/vultr-cli)、準拠している標準は [ideamans/go-llm-cli-kit](https://github.com/ideamans/go-llm-cli-kit) を参照してください。
 
 ### 例
 
@@ -108,7 +125,9 @@ vultr firewall-group list
 - `commands.go` — リフレクションによるコマンド生成とディスパッチ
 - `args.go` — 位置引数の型変換（スカラー / JSON / @file / stdin）と `--schema` 生成
 - `naming.go` — Go 識別子 → kebab-case 変換（`CreateIPv4` → `create-ipv4` 等）
-- `llm.go` — `--llm` の AI 向けリファレンス生成
+- `llm.go` — リクエストボディ JSON スキーマ章の生成
+- `gen_llmdocs.go` — `go generate` で埋め込みリファレンスを再生成（隠しコマンド `gen-llmdocs`）
+- `internal/llmdocs/` — `vultr llm` が出力する埋め込みリファレンス（`00-guide.md` は手書き、`90-`/`91-` は生成物）
 - `dispatch_test.go` — ディスパッチャ前提条件の全数監査テスト
 
 ## CI / リリース

@@ -10,14 +10,25 @@ import (
 	"os"
 	"time"
 
+	"github.com/ideamans/go-llm-cli-kit/llmcmd"
 	"github.com/spf13/cobra"
 	"github.com/vultr/govultr/v3"
 	"golang.org/x/oauth2"
+
+	"github.com/ideamans/vultr-cli/internal/llmdocs"
 )
+
+//go:generate go run . gen-llmdocs
+
+// pluginVersion is the released version of this CLI. It is also the version
+// recorded in plugins/vultr-cli/.claude-plugin/plugin.json — a test enforces
+// that the two agree, and the release workflow enforces that both agree with
+// the git tag. Bump it in the same commit as the tag.
+const pluginVersion = "0.2.0"
 
 // Overridden at release time by goreleaser via -ldflags.
 var (
-	version = "dev"
+	version = pluginVersion
 	commit  = "none"
 	date    = "unknown"
 )
@@ -27,7 +38,14 @@ var (
 	forceIPv4Flag bool
 )
 
-func main() {
+// llmConfig describes the `vultr llm` subcommand.
+func llmConfig() llmcmd.Config {
+	return llmcmd.Config{Docs: llmdocs.Docs()}
+}
+
+// newRoot assembles the full command tree without executing it, so that both
+// main and the catalog generator work from the same definition.
+func newRoot() *cobra.Command {
 	root := &cobra.Command{
 		Use:           "vultr",
 		Short:         "vultr is a CLI that wraps the entire Vultr API (via govultr)",
@@ -38,22 +56,27 @@ func main() {
 	}
 	root.PersistentFlags().StringVar(&apiKeyFlag, "api-key", "", "Vultr API key (defaults to VULTR_API_KEY environment variable)")
 	root.PersistentFlags().BoolVarP(&forceIPv4Flag, "ipv4", "4", false, "force IPv4 connections to the API (useful with IP-restricted API keys)")
-	root.PersistentFlags().Bool("llm", false, "print the full machine-oriented reference for AI (LLMs) and exit")
 	buildCommands(root)
 
-	// --llm anywhere on the command line prints the LLM guide and exits,
-	// bypassing cobra so it works regardless of subcommand position.
-	for _, a := range os.Args[1:] {
-		if a == "--" {
-			break
+	llmcmd.AddTo(root, llmConfig())
+	root.AddCommand(newGenerateCommand())
+	return root
+}
+
+func main() {
+	// --llm anywhere on the command line prints the reference and exits,
+	// bypassing cobra so it keeps working regardless of subcommand position.
+	// Deprecated in favour of `vultr llm`, but removing it would break every
+	// existing caller.
+	if handled, err := llmcmd.HandleLegacy(os.Args[1:], llmConfig(), os.Stdout); handled {
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "Error:", err)
+			os.Exit(1)
 		}
-		if a == "--llm" {
-			fmt.Print(llmHelp())
-			return
-		}
+		return
 	}
 
-	if err := root.Execute(); err != nil {
+	if err := newRoot().Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, "Error:", err)
 		os.Exit(1)
 	}
