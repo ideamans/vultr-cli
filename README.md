@@ -36,13 +36,30 @@ vultr instance --help       # all instance operations with signatures
 vultr instance get --help   # arguments of a single operation
 ```
 
-### Help for AI (LLMs)
+### Use from an AI agent
 
-`--llm` prints a single self-contained reference for LLM consumption: usage conventions, the full catalog of all operations, and the JSON schema of every request body type. It is generated from the same reflection data as the command tree, so it never drifts from the actual CLI.
+`vultr llm` prints a single self-contained reference: usage conventions, the full catalog of all operations, and the JSON schema of every request body type. The catalog and schemas are generated from the same reflection data as the command tree, so they never drift from the actual CLI, and the whole thing is embedded in the binary — it works offline and always matches the version you are running.
 
 ```bash
-vultr --llm
+vultr llm                  # Markdown
+vultr llm --format json    # chapters as a JSON array
+vultr --llm                # deprecated alias, still accepted anywhere on the line
 ```
+
+Claude Code users can install the plugin instead, which adds `/vultr-cli-usage` and `/vultr-cli-install`:
+
+```
+/plugin marketplace add ideamans/claude-public-plugins
+/plugin install vultr-cli@ideamans-plugins
+```
+
+The same skills work in Copilot, Cursor and other Agent Skills hosts:
+
+```bash
+gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-cli-usage --agent copilot
+```
+
+See [`plugins/vultr-cli/`](plugins/vultr-cli) for the skills themselves, and [ideamans/go-llm-cli-kit](https://github.com/ideamans/go-llm-cli-kit) for the standard they follow.
 
 ### Examples
 
@@ -108,7 +125,9 @@ The CLI walks every service field (interface) of `govultr.Client` via reflection
 - `commands.go` — reflection-based command generation and dispatch
 - `args.go` — positional argument conversion (scalars / JSON / @file / stdin) and `--schema` generation
 - `naming.go` — Go identifier → kebab-case conversion (`CreateIPv4` → `create-ipv4` etc.)
-- `llm.go` — `--llm` reference generation for AI consumption
+- `llm.go` — request body JSON schema chapter generation
+- `gen_llmdocs.go` — regenerates the embedded reference under `go generate` (hidden `gen-llmdocs` command)
+- `internal/llmdocs/` — the reference `vultr llm` prints (`00-guide.md` hand-written, `90-`/`91-` generated)
 - `dispatch_test.go` — full-surface audit of dispatcher assumptions
 
 ## CI / Release

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "vultr-cli",
+  "description": "An aws-style CLI that wraps the entire Vultr API through govultr. Every service interface and API operation is reachable as `vultr <service> <operation>`, with JSON request bodies passed inline, from a file or on stdin, and JSON responses on stdout. Built for scripts and AI agents: no prompts, no state between invocations, and a complete machine-readable reference embedded in the binary behind `vultr llm`.",
+  "folders": ["internal/llmdocs"],
+  "excludeFolders": ["plugins", ".github"],
+  "excludeFiles": ["README_ja.md"],
+  "rules": [
+    "Authentication comes from the VULTR_API_KEY environment variable or --api-key. Without either, every command fails with `Error: no API key: set VULTR_API_KEY or pass --api-key`. Never put the key on the command line in examples — it lands in shell history.",
+    "Command names are kebab-case renderings of the govultr method names: Instance.List is `vultr instance list`, Database.ListConnectionPools is `vultr database list-connection-pools`. Do not invent friendlier names.",
+    "A `<json:TypeName>` positional takes a JSON body inline, as @file.json, or as - for stdin. Unknown fields are rejected outright, so run the operation with --schema first — it prints the accepted shape and exits without calling the API.",
+    "An operation whose signature includes *ListOptions takes pagination and filtering as FLAGS (--per-page, --cursor, --tag, --label, --region, --main-ip, --description), not as a positional argument. Passing a positional there fails with `too many arguments`.",
+    "List operations that return Meta accept --all, which follows pagination and merges every page. Prefer it over looping on --cursor.",
+    "Some list operations take a required filter string first; pass an empty string for `all`, e.g. `vultr plan list '' --per-page 5`.",
+    "Output is JSON on stdout. A single return value prints as-is; multiple values print as {\"data\": ..., \"meta\": ...} with extra values keyed by their snake_case type name. Operations with no return value print nothing and exit 0. Errors go to stderr prefixed with `Error:` and exit 1.",
+    "There is no confirmation prompt, no dry-run mode and no retry or backoff. `vultr instance delete <id>` deletes immediately, and a 429 surfaces as a plain error. Treat every delete/destroy/detach/halt as irreversible.",
+    "An IP-restricted API key that fails intermittently with 401 is usually resolving over IPv6; add -4 (--ipv4) to force IPv4.",
+    "The complete reference is embedded in the binary: `vultr llm` (Markdown) or `vultr llm --format json`. It is generated from the same reflection data the CLI dispatches on, so prefer it over any remembered command list."
+  ]
+}
