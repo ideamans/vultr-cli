@@ -31,7 +31,7 @@ Vultr API 全体をラップする aws 風 CLI。`govultr` の全サービス・
   `context7.json` の該当 rule
 - エージェントが間違えやすい罠を見つけた → `00-guide.md` の失敗モード表と
   `context7.json` の `rules`
-- 破壊的操作の扱いを変えた → `vultr-cli-usage` の SKILL.md。この CLI には確認プロンプトが
+- 破壊的操作の扱いを変えた → `vultr-usage` の SKILL.md。この CLI には確認プロンプトが
   無いため、スキル側で同意を取る手順を保っていること
 
 ## リリース

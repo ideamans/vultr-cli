@@ -46,7 +46,7 @@ vultr llm --format json    # 章ごとの JSON 配列
 vultr --llm                # 非推奨エイリアス。従来どおりどの位置でも動作します
 ```
 
-Claude Code ではプラグインを導入すると `/vultr-cli-usage` と `/vultr-cli-install` が使えます。
+Claude Code ではプラグインを導入すると `/vultr-usage` と `/vultr-install` が使えます。
 
 ```
 /plugin marketplace add ideamans/claude-public-plugins
@@ -56,7 +56,7 @@ Claude Code ではプラグインを導入すると `/vultr-cli-usage` と `/vul
 同じスキルは Copilot や Cursor など Agent Skills 対応ホストでも利用できます。
 
 ```bash
-gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-cli-usage --agent copilot
+gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-usage --agent copilot
 ```
 
 スキル本体は [`plugins/vultr-cli/`](plugins/vultr-cli)、準拠している標準は [ideamans/go-llm-cli-kit](https://github.com/ideamans/go-llm-cli-kit) を参照してください。

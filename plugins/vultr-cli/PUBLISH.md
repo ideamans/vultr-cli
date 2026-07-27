@@ -36,12 +36,12 @@ description changes.
 ```
 /plugin marketplace add ideamans/claude-public-plugins
 /plugin install vultr-cli@ideamans-plugins
-/vultr-cli-usage
+/vultr-usage
 ```
 
 Other hosts install the same files directly:
 
 ```bash
-gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-cli-usage --agent copilot
+gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-usage --agent copilot
 gh skill update
 ```

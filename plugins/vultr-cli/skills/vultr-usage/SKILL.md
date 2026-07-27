@@ -1,12 +1,12 @@
 ---
-name: vultr-cli-usage
+name: vultr-usage
 description: Operate Vultr cloud infrastructure from the command line with the vultr CLI — instances, bare metal, block storage, DNS, load balancers, Kubernetes, firewalls, snapshots and every other Vultr API service. Use when the user asks to list, create, inspect, resize or delete Vultr resources, mentions their Vultr account, or is working with a VPS they host there.
 license: MIT
-compatibility: Requires the `vultr` binary on PATH — run the vultr-cli-install skill if it is missing. Needs VULTR_API_KEY in the environment or an --api-key value. Every command hits the live Vultr API; there is no dry-run mode.
+compatibility: Requires the `vultr` binary on PATH — run the vultr-install skill if it is missing. Needs VULTR_API_KEY in the environment or an --api-key value. Every command hits the live Vultr API; there is no dry-run mode.
 allowed-tools: Bash(vultr:*) Bash(jq:*) Bash(command:*) Read Write
 ---
 
-# vultr-cli-usage
+# vultr-usage
 
 Drive the Vultr API through the `vultr` CLI. It covers every operation govultr
 exposes, which is far more than any one session needs — so the workflow is
@@ -18,7 +18,7 @@ always *look it up, then run it*.
 command -v vultr && vultr --version
 ```
 
-Missing? Run the `vultr-cli-install` skill, then come back.
+Missing? Run the `vultr-install` skill, then come back.
 
 ```bash
 vultr account get
@@ -88,7 +88,7 @@ verbatim — the CLI's messages are actionable as written.
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| `command not found: vultr` | not installed | run the `vultr-cli-install` skill |
+| `command not found: vultr` | not installed | run the `vultr-install` skill |
 | `Error: no API key: ...` | `VULTR_API_KEY` unset | ask the user to export it |
 | intermittent 401 | IP-restricted key over IPv6 | add `-4` |
 | `Error: json: unknown field "..."` | body field guessed | re-run with `--schema` and match it exactly |
