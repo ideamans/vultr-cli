@@ -24,7 +24,7 @@ import (
 // recorded in plugins/vultr-cli/.claude-plugin/plugin.json — a test enforces
 // that the two agree, and the release workflow enforces that both agree with
 // the git tag. Bump it in the same commit as the tag.
-const pluginVersion = "0.2.0"
+const pluginVersion = "0.3.0"
 
 // Overridden at release time by goreleaser via -ldflags.
 var (
