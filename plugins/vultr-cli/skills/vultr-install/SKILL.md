@@ -1,12 +1,12 @@
 ---
-name: vultr-cli-install
+name: vultr-install
 description: Make the vultr command available, installing it only if it is missing. Use when another skill reports that `vultr` is not on PATH, or when the user asks to install, update or upgrade the ideamans vultr CLI. Prefers an already-installed binary, then the latest GitHub release, then a build from source with go install.
 license: MIT
 compatibility: Requires curl (or wget) and tar to install from a release, or a Go toolchain for the source fallback. Standalone — does not need the vultr CLI to be present already. Installs from the public repository github.com/ideamans/vultr-cli, so no GitHub authentication is needed.
 allowed-tools: Bash(curl:*) Bash(wget:*) Bash(tar:*) Bash(unzip:*) Bash(go:*) Bash(uname:*) Bash(command:*) Bash(which:*) Bash(mkdir:*) Bash(mv:*) Bash(cp:*) Bash(rm:*) Bash(chmod:*) Bash(ls:*) Bash(test:*) Bash(echo:*) Read
 ---
 
-# vultr-cli-install
+# vultr-install
 
 Make the `vultr` command usable, doing the least work that achieves it.
 

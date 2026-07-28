@@ -46,7 +46,7 @@ vultr llm --format json    # chapters as a JSON array
 vultr --llm                # deprecated alias, still accepted anywhere on the line
 ```
 
-Claude Code users can install the plugin instead, which adds `/vultr-cli-usage` and `/vultr-cli-install`:
+Claude Code users can install the plugin instead, which adds `/vultr-usage` and `/vultr-install`:
 
 ```
 /plugin marketplace add ideamans/claude-public-plugins
@@ -56,7 +56,7 @@ Claude Code users can install the plugin instead, which adds `/vultr-cli-usage` 
 The same skills work in Copilot, Cursor and other Agent Skills hosts:
 
 ```bash
-gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-cli-usage --agent copilot
+gh skill install ideamans/vultr-cli/plugins/vultr-cli/skills/vultr-usage --agent copilot
 ```
 
 See [`plugins/vultr-cli/`](plugins/vultr-cli) for the skills themselves, and [ideamans/go-llm-cli-kit](https://github.com/ideamans/go-llm-cli-kit) for the standard they follow.

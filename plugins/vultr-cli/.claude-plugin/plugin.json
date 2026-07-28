@@ -1,6 +1,6 @@
 {
   "name": "vultr-cli",
-  "description": "Adds /vultr-cli-usage and /vultr-cli-install skills for driving the Vultr API from the command line: instances, block storage, DNS, load balancers, Kubernetes and every other Vultr service.",
+  "description": "Adds /vultr-usage and /vultr-install skills for driving the Vultr API from the command line: instances, block storage, DNS, load balancers, Kubernetes and every other Vultr service.",
   "version": "0.2.0",
   "author": {
     "name": "Ideamans Inc.",
