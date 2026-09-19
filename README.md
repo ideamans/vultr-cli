@@ -4,11 +4,17 @@ English | [日本語](README_ja.md)
 
 An aws-style CLI that wraps the entire Vultr API. It reflects over every service and method of [govultr](https://github.com/vultr/govultr) (Vultr's official Go client) and turns them into subcommands automatically, covering the full Vultr API surface (35 services, 428 operations). govultr is the official reference client that Vultr's own CLI (vultr/vultr-cli) depends on as well.
 
-## Build
+## Install
+
+Download the archive for your platform from [Releases](https://github.com/ideamans/vultr-cli/releases) and put the `vultr` binary on your `PATH`.
+
+To build from source:
 
 ```bash
 go build -o vultr .
 ```
+
+Claude Code users can let the `/vultr-install` skill do this (see below).
 
 ## Authentication
 
@@ -129,6 +135,10 @@ The CLI walks every service field (interface) of `govultr.Client` via reflection
 - `gen_llmdocs.go` — regenerates the embedded reference under `go generate` (hidden `gen-llmdocs` command)
 - `internal/llmdocs/` — the reference `vultr llm` prints (`00-guide.md` hand-written, `90-`/`91-` generated)
 - `dispatch_test.go` — full-surface audit of dispatcher assumptions
+
+## License
+
+MIT
 
 ## CI / Release
 
