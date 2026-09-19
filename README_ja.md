@@ -4,11 +4,17 @@
 
 Vultr API 全体をラップする aws 風 CLI です。[govultr](https://github.com/vultr/govultr)（Vultr 公式 Go クライアント）の全サービス・全メソッドをリフレクションで自動的にサブコマンド化しているため、Vultr が提供する全 API（35 サービス・428 オペレーション）をカバーします。govultr は Vultr 公式 CLI（vultr/vultr-cli）も依存する公式リファレンスクライアントです。
 
-## ビルド
+## インストール
+
+[Releases](https://github.com/ideamans/vultr-cli/releases) から環境に合ったアーカイブを取得し、中の `vultr` を `PATH` の通った場所に置いてください。
+
+ソースからビルドする場合:
 
 ```bash
 go build -o vultr .
 ```
+
+Claude Code では、プラグインの `/vultr-install` スキルが導入まで行います（後述）。
 
 ## 認証
 
@@ -129,6 +135,10 @@ vultr firewall-group list
 - `gen_llmdocs.go` — `go generate` で埋め込みリファレンスを再生成（隠しコマンド `gen-llmdocs`）
 - `internal/llmdocs/` — `vultr llm` が出力する埋め込みリファレンス（`00-guide.md` は手書き、`90-`/`91-` は生成物）
 - `dispatch_test.go` — ディスパッチャ前提条件の全数監査テスト
+
+## ライセンス
+
+MIT
 
 ## CI / リリース
 
